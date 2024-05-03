@@ -35,7 +35,7 @@ public class BookingController {
         }
     }
     @GetMapping("/date")
-    public Object dateBookings(@RequestHeader BookingRequest request,@RequestHeader("Authorization") String header){
+    public Object dateBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header){
         String token = header.split(" ")[1];
         try{
             return bookingService.dateBookings( request.date(),token);
@@ -45,7 +45,7 @@ public class BookingController {
         }
     }
     @GetMapping("/tour")
-    public Object tourBookings(@RequestHeader BookingRequest request,@RequestHeader("Authorization") String header){
+    public Object tourBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header){
         String token = header.split(" ")[1];
         try{
             return bookingService.tourBookings( request.tour_id(),token);

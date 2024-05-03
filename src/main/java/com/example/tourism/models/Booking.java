@@ -1,7 +1,6 @@
 package com.example.tourism.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +27,17 @@ public class Booking {
 
     private String date;
 
+    @Transient
+    private Long userId;
 
+    @Transient
+    private Long tourId;
+
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+
+    public Long getTourId() {
+        return tour != null ? tour.getId() : null;
+    }
 }
