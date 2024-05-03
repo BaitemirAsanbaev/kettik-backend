@@ -1,6 +1,7 @@
 package com.example.tourism.controllers;
 
 import com.example.tourism.dto.TourRequest;
+import com.example.tourism.models.Category;
 import com.example.tourism.models.Tour;
 import com.example.tourism.services.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class TourController {
     @GetMapping("/all")
     public List<Tour> tours() {
         return tourService.getAllTours();
+    }
+    @GetMapping("/categories")
+    public List<Category> categories() {
+        return tourService.getAllCategories();
     }
     @GetMapping("/{id}")
     public Tour getTourById(@PathVariable Long id) {

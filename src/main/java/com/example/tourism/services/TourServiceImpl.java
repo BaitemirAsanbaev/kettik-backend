@@ -1,6 +1,7 @@
 package com.example.tourism.services;
 
 import com.example.tourism.dto.TourRequest;
+import com.example.tourism.models.Category;
 import com.example.tourism.security.AdminMiddleware;
 import com.example.tourism.models.Tour;
 import com.example.tourism.models.User;
@@ -9,6 +10,7 @@ import com.example.tourism.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,6 +25,10 @@ public class TourServiceImpl implements TourService {
     @Override
     public List<Tour> getAllTours() {
         return tourRepo.findAll();
+    }
+    @Override
+    public List<Category> getAllCategories() {
+        return Arrays.stream(Category.values()).toList();
     }
 
     @Override
