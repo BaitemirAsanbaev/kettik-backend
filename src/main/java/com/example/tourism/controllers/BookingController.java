@@ -3,6 +3,8 @@ package com.example.tourism.controllers;
 import com.example.tourism.dto.BookingRequest;
 import com.example.tourism.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,44 +16,42 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping("/book")
-    public Object book(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header){
+    public ResponseEntity<?> book(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header) {
         String token = header.split(" ")[1];
-        try{
-            return bookingService.book(request.tour_id(), request.date(), token);
-        }
-        catch (RuntimeException e){
-            return e.getMessage();
+        try {
+            return ResponseEntity.ok(bookingService.book(request.tour_id(), request.date(), token));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @GetMapping("/my")
-    public Object myBookings(@RequestHeader("Authorization") String header){
+    public ResponseEntity<?> myBookings(@RequestHeader("Authorization") String header) {
         String token = header.split(" ")[1];
-        try{
-            return bookingService.myBookings(token);
-        }
-        catch (RuntimeException e){
-            return e.getMessage();
+        try {
+            return ResponseEntity.ok(bookingService.myBookings(token));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @GetMapping("/date")
-    public Object dateBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header){
+    public ResponseEntity<?> dateBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header) {
         String token = header.split(" ")[1];
-        try{
-            return bookingService.dateBookings( request.date(),token);
-        }
-        catch (RuntimeException e){
-            return e.getMessage();
+        try {
+            return ResponseEntity.ok(bookingService.dateBookings(request.date(), token));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @GetMapping("/tour")
-    public Object tourBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header){
+    public ResponseEntity<?> tourBookings(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header) {
         String token = header.split(" ")[1];
-        try{
-            return bookingService.tourBookings( request.tour_id(),token);
-        }
-        catch (RuntimeException e){
-            return e.getMessage();
+        try {
+            return ResponseEntity.ok(bookingService.tourBookings(request.tour_id(), token));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

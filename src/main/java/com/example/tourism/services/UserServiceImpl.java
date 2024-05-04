@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
+
     @SneakyThrows
     @Override
     public String register(UserRequest request) {
 
-        if (userRepo.findByEmail(request.email()) != null){
-            return "Пользователь уже существует";
+        if (userRepo.findByEmail(request.email()) != null) {
+            throw new RuntimeException("Пользователь уже существует");
         }
 
         final String token = SHA256.hash(request.email());
@@ -37,11 +38,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(String email, String password) {
         User user = userRepo.findByEmail(email);
-        if ( user == null){
-            return "Пользователь не найден";
+        if (user == null) {
+            throw new RuntimeException("Пользователь не найден");
         }
-        if(!user.getPassword().equals(SHA256.hash(password))){
-            return "Неверный пароль";
+        if (!user.getPassword().equals(SHA256.hash(password))) {
+            throw new RuntimeException("Неверный пароль");
         }
         return user.getToken();
     }

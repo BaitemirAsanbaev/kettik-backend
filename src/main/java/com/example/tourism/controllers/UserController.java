@@ -3,6 +3,8 @@ package com.example.tourism.controllers;
 import com.example.tourism.services.UserService;
 import com.example.tourism.dto.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,13 +16,21 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody UserRequest user) {
-        return userService.register(user);
+    public ResponseEntity<String> register(@RequestBody UserRequest user) {
+        try {
+            return ResponseEntity.ok(userService.register(user));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserRequest user) {
-        return userService.login(user.email(), user.password());
+    public ResponseEntity<String> login(@RequestBody UserRequest user) {
+        try {
+            return ResponseEntity.ok(userService.login(user.email(), user.password()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 }
 
