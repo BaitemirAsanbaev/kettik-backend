@@ -20,7 +20,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.register(user));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -29,7 +29,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.login(user.email(), user.password()));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

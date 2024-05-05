@@ -64,7 +64,14 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Tour deleteTour(Long id) {
+    public Tour deleteTour(Long id, String token) {
+        User user = userRepo.findByToken(token);
+        if (user==null){
+            throw new RuntimeException("User does not exist");
+        }
+        if (!AdminMiddleware.isAdmin(user.getEmail())) {
+            throw new RuntimeException("User is not admin");
+        }
         tourRepo.deleteById(id);
         return tourRepo.getReferenceById(id);
     }

@@ -17,21 +17,15 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     private Tour tour;
 
     private String date;
-
-    @Transient
-    private Long userId;
-
-    @Transient
-    private Long tourId;
 
     public Long getUserId() {
         return user != null ? user.getId() : null;

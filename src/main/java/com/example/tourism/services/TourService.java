@@ -11,5 +11,5 @@ public interface TourService {
     List<Category> getAllCategories();
     Tour getTourById(Long id);
     Tour createTour(TourRequest request, String token);
-    Tour deleteTour(Long id);
+    Tour deleteTour(Long id, String token);
 }

@@ -46,7 +46,14 @@ public class TourController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Tour deleteTour(@PathVariable Long id) {
-        return tourService.deleteTour(id);
-           }
+    public ResponseEntity<?> deleteTour(@PathVariable Long id, @RequestHeader("Authorization") String header) {
+        String token = header.split(" ")[1];
+        try{
+
+            return ResponseEntity.ok(tourService.deleteTour(id, token));
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
 }
