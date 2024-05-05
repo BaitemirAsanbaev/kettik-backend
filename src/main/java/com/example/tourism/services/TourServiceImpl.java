@@ -33,7 +33,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Tour getTourById(Long id) {
-        return tourRepo.getReferenceById(id);
+        return tourRepo.findById(id).get();
     }
 
     @Override

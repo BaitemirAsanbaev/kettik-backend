@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public Booking book(Long tourId, String date, String token) throws AuthenticationException, BadRequestException {
         User user = userRepo.findByToken(token);
-        Tour tour = tourRepo.getReferenceById(tourId);
+        Tour tour = tourRepo.findById(tourId).get();
 
         if (user==null) throw new AuthenticationException("invalid token");
         if (tour==null) throw new BadRequestException("tour not found");
