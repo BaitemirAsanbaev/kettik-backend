@@ -22,7 +22,7 @@ public class BookingController {
     public ResponseEntity<?> book(@RequestBody BookingRequest request, @RequestHeader("Authorization") String header) {
         String token = header.split(" ")[1];
         try {
-            return ResponseEntity.ok(bookingService.book(request.tour_id(), request.date(), token));
+            return ResponseEntity.ok(bookingService.book(request.tour_id(), request.date(), request.phone(), request.people(), token));
         } catch (BadRequestException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

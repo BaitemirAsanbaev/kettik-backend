@@ -26,7 +26,8 @@ public class Booking {
     private Tour tour;
 
     private String date;
-
+    private String phone;
+    private Integer people;
     public Long getUserId() {
         return user != null ? user.getId() : null;
     }

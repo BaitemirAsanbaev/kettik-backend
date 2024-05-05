@@ -25,7 +25,7 @@ public class BookingServiceImpl implements BookingService{
     @Autowired
     TourRepo tourRepo;
     @Override
-    public Booking book(Long tourId, String date, String token) throws AuthenticationException, BadRequestException {
+    public Booking book(Long tourId, String date, String phone, Integer people, String token) throws AuthenticationException, BadRequestException {
         User user = userRepo.findByToken(token);
         Tour tour = tourRepo.findById(tourId).get();
 
@@ -35,6 +35,8 @@ public class BookingServiceImpl implements BookingService{
         Booking booking = new Booking();
         booking.setTour(tour);
         booking.setUser(user);
+        booking.setPhone(phone);
+        booking.setPeople(people);
         booking.setDate(date);
 
         return bookingRepo.save(booking);
