@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tour")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:5173")
 public class TourController {
 
     @Autowired
