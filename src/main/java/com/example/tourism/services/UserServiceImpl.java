@@ -1,8 +1,10 @@
 package com.example.tourism.services;
 
 import com.example.tourism.dto.UserRequest;
+import com.example.tourism.models.Role;
 import com.example.tourism.models.User;
 import com.example.tourism.repositories.UserRepo;
+import com.example.tourism.security.AdminMiddleware;
 import com.example.tourism.security.SHA256;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.email());
         user.setPassword(SHA256.hash(request.password()));
         user.setToken(token);
+        if (AdminMiddleware.isAdmin(user.getEmail())){
+            user.setRole(Role.ADMIN);
+        }
+        else{
+            user.setRole(Role.CUSTOMER);
+        }
         userRepo.save(user);
         return token;
     }
