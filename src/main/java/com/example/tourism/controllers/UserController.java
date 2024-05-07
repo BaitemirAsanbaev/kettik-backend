@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
-@RequestMapping("/auth")
 public class UserController {
     @Autowired
     UserService userService;
@@ -43,7 +42,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
-    @DeleteMapping("/delete")
+    @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deleteProfile(@RequestHeader("Authorization") String header){
         String token = header.split("")[1];
         try{
@@ -54,7 +53,7 @@ public class UserController {
         }
 
     }
-    @PatchMapping("/")
+    @PatchMapping("/profile/edit")
     public ResponseEntity<?> editProfile(@RequestHeader("Authorization") String header, @RequestBody UserRequest request){
         String token = header.split("")[1];
         try{
