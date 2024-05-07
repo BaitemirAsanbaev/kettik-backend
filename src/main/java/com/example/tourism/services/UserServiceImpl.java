@@ -46,4 +46,35 @@ public class UserServiceImpl implements UserService {
         }
         return user.getToken();
     }
+
+    @Override
+    public User profile(String token) {
+        User user = userRepo.findByToken(token);
+        if (user == null) {
+            throw new RuntimeException("Пользователь не найден");
+        }
+        return user;
+    }
+
+    @Override
+    public User deleteProfile(String token) {
+        User user = userRepo.findByToken(token);
+        if (user == null) {
+            throw new RuntimeException("Пользователь не найден");
+        }
+        userRepo.delete(user);
+        return user;
+    }
+
+    @Override
+    public User editProfile(String token, UserRequest request) {
+        User user = userRepo.findByToken(token);
+        if (user == null) {
+            throw new RuntimeException("Пользователь не найден");
+        }
+        user.setFirstname(request.firstname()!=null?request.firstname():user.getFirstname());
+        user.setLastname(request.lastname()!=null?request.lastname():user.getLastname());
+        user.setPhone(request.phone()!=null?request.phone():user.getPhone());
+        return userRepo.save(user);
+    }
 }

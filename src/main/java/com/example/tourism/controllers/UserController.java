@@ -32,5 +32,37 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping("/profile")
+    public ResponseEntity<?> profile(@RequestHeader("Authorization") String header){
+
+        String token = header.split(" ")[1];
+        try{
+            return ResponseEntity.ok(userService.profile(token));
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteProfile(@RequestHeader("Authorization") String header){
+        String token = header.split("")[1];
+        try{
+            return ResponseEntity.ok(userService.deleteProfile(token));
+        }
+        catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+
+    }
+    @PatchMapping("/")
+    public ResponseEntity<?> editProfile(@RequestHeader("Authorization") String header, @RequestBody UserRequest request){
+        String token = header.split("")[1];
+        try{
+            return ResponseEntity.ok(userService.editProfile(token, request));
+        }
+        catch (RuntimeException e){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
 }
 
