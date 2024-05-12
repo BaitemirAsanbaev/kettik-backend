@@ -14,10 +14,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
-
-    @SneakyThrows
     @Override
-    public String register(UserRequest request) {
+    public User register(UserRequest request) {
 
         if (userRepo.findByEmail(request.email()) != null) {
             throw new RuntimeException("Пользователь уже существует");
@@ -39,12 +37,12 @@ public class UserServiceImpl implements UserService {
             user.setRole(Role.CUSTOMER);
         }
         userRepo.save(user);
-        return token;
+        return user;
     }
 
-    @SneakyThrows
+
     @Override
-    public String login(String email, String password) {
+    public User login(String email, String password) {
         User user = userRepo.findByEmail(email);
         if (user == null) {
             throw new RuntimeException("Пользователь не найден");
@@ -52,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(SHA256.hash(password))) {
             throw new RuntimeException("Неверный пароль");
         }
-        return user.getToken();
+        return user;
     }
 
     @Override

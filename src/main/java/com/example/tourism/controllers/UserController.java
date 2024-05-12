@@ -15,7 +15,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRequest user) {
+    public ResponseEntity<?> register(@RequestBody UserRequest user) {
         try {
             return ResponseEntity.ok(userService.register(user));
         } catch (RuntimeException e) {
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserRequest user) {
+    public ResponseEntity<?> login(@RequestBody UserRequest user) {
         try {
             return ResponseEntity.ok(userService.login(user.email(), user.password()));
         } catch (RuntimeException e) {
@@ -44,7 +44,7 @@ public class UserController {
     }
     @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deleteProfile(@RequestHeader("Authorization") String header){
-        String token = header.split("")[1];
+        String token = header.split(" ")[1];
         try{
             return ResponseEntity.ok(userService.deleteProfile(token));
         }
@@ -55,7 +55,7 @@ public class UserController {
     }
     @PatchMapping("/profile/edit")
     public ResponseEntity<?> editProfile(@RequestHeader("Authorization") String header, @RequestBody UserRequest request){
-        String token = header.split("")[1];
+        String token = header.split(" ")[1];
         try{
             return ResponseEntity.ok(userService.editProfile(token, request));
         }
