@@ -56,10 +56,10 @@ public class TourServiceImpl implements TourService {
         tour.setCategory(request.category());
         tour.setFullDescription(request.fullDescription());
         tour.setBringCharacteristics(request.bringCharacteristics());
-        tour.setImage(cloudinaryService.upload(request.image()));
-        tour.setImage2(cloudinaryService.upload(request.image()));
-        tour.setImage3(cloudinaryService.upload(request.image()));
-        tour.setImage4(cloudinaryService.upload(request.image()));
+        tour.setImage(request.image());
+        tour.setImage2(request.image2());
+        tour.setImage3(request.image3());
+        tour.setImage4(request.image4());
         return tourRepo.save(tour);
     }
 

@@ -15,9 +15,9 @@ public record TourRequest(
         String fullDescription,
         String day,
         Category category,
-        MultipartFile image,
-        MultipartFile image2,
-        MultipartFile image3,
-        MultipartFile image4
+        String image,
+        String image2,
+        String image3,
+        String image4
 ) {
 }
